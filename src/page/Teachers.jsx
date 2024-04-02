@@ -49,9 +49,15 @@ const Teachers = () => {
       <Box sx={{ display: "flex" }}>
         <Dashboard />
         <Container maxWidth="xl" sx={{ mt: 12 }}>
-        <Typography variant="h5" sx={{mb: 4}}>Teachers</Typography>
-          <TeacherSearchComp addOpenModal={addOpenModal} data={data} setFiltered={setFiltered}/>
-          <TeachersList  filtered={filtered} setFiltered={setFiltered} />
+          <Typography variant="h5" sx={{ mb: 4 }}>
+            Teachers
+          </Typography>
+          <TeacherSearchComp
+            addOpenModal={addOpenModal}
+            data={data}
+            setFiltered={setFiltered}
+          />
+          <TeachersList filtered={filtered} setFiltered={setFiltered} />
           <TeacherModalComp
             addModal={addModal}
             addStudent={addStudent}

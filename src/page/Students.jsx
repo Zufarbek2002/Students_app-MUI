@@ -11,11 +11,11 @@ import StudentsList from "../components/studentsComp/StudentsList";
 const Students = () => {
   const [data, setData] = useState([]);
   const [filtered, setFiltered] = useState(data);
-//   const [studentData, setStudentData] = useState([]);
+  //   const [studentData, setStudentData] = useState([]);
   const [addModal, setAddModal] = useState(false);
-//   const [editModal, setEditModal] = useState(false);
+  //   const [editModal, setEditModal] = useState(false);
   const [page, setPage] = useState(1);
-//   const [pages, setPages] = useState();
+  //   const [pages, setPages] = useState();
 
   const fetchApi = async () => {
     const res = await axios.get(
@@ -38,12 +38,12 @@ const Students = () => {
   const addCloseModal = () => {
     setAddModal(false);
   };
-//   const editOpenModal = () => {
-//     setEditModal(true);
-//   };
-//   const editCloseModal = () => {
-//     setEditModal(false);
-//   };
+  //   const editOpenModal = () => {
+  //     setEditModal(true);
+  //   };
+  //   const editCloseModal = () => {
+  //     setEditModal(false);
+  //   };
   const addStudent = (student) => {
     if (
       student.firstname.length >= 2 &&
@@ -53,31 +53,37 @@ const Students = () => {
       axios.post("http://localhost:3000/students", student);
     }
   };
-//   const editStudent = (student) => {
-//     axios.put(`http://localhost:3000/students/${id}`, student);
-//   };
-//   const handleEdit = async (id) => {
-//     const res = await axios(`http://localhost:3000/students/${id}`);
-//     setStudentData(res.data);
-//     editOpenModal();
-//   };
-//   const handlePrev = () => {
-//     if (page > 1) {
-//       setPage(page - 1);
-//     }
-//   };
-//   const handleNext = () => {
-//     setPage(page + 1);
-//   };
+  //   const editStudent = (student) => {
+  //     axios.put(`http://localhost:3000/students/${id}`, student);
+  //   };
+  //   const handleEdit = async (id) => {
+  //     const res = await axios(`http://localhost:3000/students/${id}`);
+  //     setStudentData(res.data);
+  //     editOpenModal();
+  //   };
+  //   const handlePrev = () => {
+  //     if (page > 1) {
+  //       setPage(page - 1);
+  //     }
+  //   };
+  //   const handleNext = () => {
+  //     setPage(page + 1);
+  //   };
 
   return (
     <>
       <Box sx={{ display: "flex" }}>
         <Dashboard />
         <Container maxWidth="xl" sx={{ mt: 12 }}>
-            <Typography variant="h5" sx={{mb: 4}}>Students</Typography>
-          <SearchComp addOpenModal={addOpenModal} data={data} setFiltered={setFiltered}/>
-          <StudentsList  filtered={filtered} setFiltered={setFiltered} />
+          <Typography variant="h5" sx={{ mb: 4 }}>
+            Students
+          </Typography>
+          <SearchComp
+            addOpenModal={addOpenModal}
+            data={data}
+            setFiltered={setFiltered}
+          />
+          <StudentsList filtered={filtered} setFiltered={setFiltered} />
           <ModalComp
             addModal={addModal}
             addStudent={addStudent}

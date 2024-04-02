@@ -16,9 +16,15 @@ const Profile = () => {
         <Dashboard />
         <Container maxWidth="xl" sx={{ mt: 12 }}>
           <Typography variant="h5">Profile</Typography>
-          <Typography variant="h5">Username: {user && user.username}</Typography>
-          <Typography variant="h5">Password: {user && user.password}</Typography>
-          <Button variant="outlined" color="error" onClick={hadleLogout}>Logout</Button>
+          <Typography variant="h5">
+            Username: {user && user.username}
+          </Typography>
+          <Typography variant="h5">
+            Password: {user && user.password}
+          </Typography>
+          <Button variant="outlined" color="error" onClick={hadleLogout}>
+            Logout
+          </Button>
         </Container>
       </Box>
     </div>

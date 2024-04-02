@@ -88,7 +88,9 @@ const ModalComp = ({ addModal, addCloseModal, addStudent }) => {
                 <Select
                   labelId="demo-simple-select-label"
                   label="Group"
-                  onChange={(e)=>setStudent({...student, group: e.target.value})}
+                  onChange={(e) =>
+                    setStudent({ ...student, group: e.target.value })
+                  }
                 >
                   <MenuItem value="All">All</MenuItem>
                   <MenuItem value="React N34">React N34</MenuItem>

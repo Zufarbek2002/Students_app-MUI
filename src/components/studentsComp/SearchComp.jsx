@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
   Box,
   Button,
@@ -31,16 +32,26 @@ const SearchComp = ({ addOpenModal, data, setFiltered }) => {
   };
 
   return (
-    <Box sx={{ minWidth: 120, width: "100%", display: "flex", justifyContent: "space-between", gap: "10px", mb: 5, flexWrap: "wrap"}}>
+    <Box
+      sx={{
+        minWidth: 120,
+        width: "100%",
+        display: "flex",
+        justifyContent: "space-between",
+        gap: "10px",
+        mb: 5,
+        flexWrap: "wrap",
+      }}
+    >
       <TextField
         type="text"
         label="Searching"
         variant="outlined"
         onChange={handleSearch}
-        sx={{width: "65%"}}
+        sx={{ width: "65%" }}
       />
 
-      <FormControl sx={{minWidth: 120, width: "15%" }}>
+      <FormControl sx={{ minWidth: 120, width: "15%" }}>
         <InputLabel id="demo-simple-select-label">Group</InputLabel>
         <Select
           id="demo-simple-select"
@@ -55,7 +66,12 @@ const SearchComp = ({ addOpenModal, data, setFiltered }) => {
           <MenuItem value="React N45">React N45</MenuItem>
         </Select>
       </FormControl>
-      <Button sx={{width: "15%"}} variant="outlined" color="success" onClick={addOpenModal}>
+      <Button
+        sx={{ width: "15%" }}
+        variant="outlined"
+        color="success"
+        onClick={addOpenModal}
+      >
         Add
       </Button>
     </Box>
