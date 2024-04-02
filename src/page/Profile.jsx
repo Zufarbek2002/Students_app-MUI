@@ -7,24 +7,40 @@ const Profile = () => {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
   const hadleLogout = () => {
-    logout();
-    navigate("/login");
+    if (confirm("Are you sure!")) {
+      logout();
+      navigate("/login");
+    }
   };
   return (
     <div>
       <Box sx={{ display: "flex" }}>
         <Dashboard />
-        <Container maxWidth="xl" sx={{ mt: 12 }}>
-          <Typography variant="h5">Profile</Typography>
-          <Typography variant="h5">
-            Username: {user && user.username}
-          </Typography>
-          <Typography variant="h5">
-            Password: {user && user.password}
-          </Typography>
-          <Button variant="outlined" color="error" onClick={hadleLogout}>
-            Logout
-          </Button>
+        <Container maxWidth="sm" sx={{ mt: 15 }}>
+          <Typography variant="h4">Profile</Typography>
+          <Box
+            sx={{
+              mt: 2,
+              display: "flex",
+              flexDirection: "column",
+              gap: "15px",
+            }}
+          >
+            <Typography variant="h5">
+              Username: {user && user.username}
+            </Typography>
+            <Typography variant="h5">
+              Password: {user && user.password}
+            </Typography>
+            <Button
+              sx={{ width: "25%" }}
+              variant="outlined"
+              color="error"
+              onClick={hadleLogout}
+            >
+              Logout
+            </Button>
+          </Box>
         </Container>
       </Box>
     </div>
