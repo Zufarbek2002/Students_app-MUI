@@ -1,0 +1,64 @@
+{
+  "students": [
+    {
+      "id": "1",
+      "firstname": "John",
+      "lastname": "Doe",
+      "group": "React N45"
+    },
+    {
+      "id": "2",
+      "firstname": "Tom",
+      "lastname": "Smith",
+      "group": "React N34"
+    },
+    {
+      "id": "3",
+      "firstname": "John",
+      "lastname": "Smith",
+      "group": "React N45"
+    },
+    {
+      "id": "4",
+      "firstname": "John",
+      "lastname": "White",
+      "group": "React N34"
+    },
+    {
+      "id": "2f02",
+      "firstname": "Zufarbek",
+      "lastname": "Yoldashev",
+      "group": "React N34"
+    }
+  ],
+  "teachers": [
+    {
+      "id": "1",
+      "firstname": "John",
+      "lastname": "Doe",
+      "group": "React N45",
+      "level": "Senior"
+    },
+    {
+      "id": "2",
+      "firstname": "Tom",
+      "lastname": "Smith",
+      "group": "React N34",
+      "level": "Senior"
+    },
+    {
+      "id": "3",
+      "firstname": "John",
+      "lastname": "Smith",
+      "group": "React N45",
+      "level": "Middle"
+    },
+    {
+      "id": "4",
+      "firstname": "John",
+      "lastname": "White",
+      "group": "React N34",
+      "level": "Junior"
+    }
+  ]
+}
