@@ -29,6 +29,24 @@
       "firstname": "Zufarbek",
       "lastname": "Yoldashev",
       "group": "React N34"
+    },
+    {
+      "id": "5",
+      "firstname": "Tom",
+      "lastname": "Smith",
+      "group": "React N34"
+    },
+    {
+      "id": "6",
+      "firstname": "John",
+      "lastname": "Smith",
+      "group": "React N45"
+    },
+    {
+      "id": "7",
+      "firstname": "John",
+      "lastname": "White",
+      "group": "React N34"
     }
   ],
   "teachers": [

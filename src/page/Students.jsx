@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Container, Typography } from "@mui/material";
+import { Container, Pagination, Stack, Typography } from "@mui/material";
 import { Dashboard } from "../components/Dashboard";
 import Box from "@mui/material/Box";
 import { useEffect, useState } from "react";
@@ -15,7 +15,7 @@ const Students = () => {
   const [addModal, setAddModal] = useState(false);
   //   const [editModal, setEditModal] = useState(false);
   const [page, setPage] = useState(1);
-  //   const [pages, setPages] = useState();
+  const [pages, setPages] = useState();
 
   const fetchApi = async () => {
     const res = await axios.get(
@@ -23,11 +23,11 @@ const Students = () => {
     );
     const data = await res.data;
     setData(data.data);
-    // setPages(data.pages);
+    setPages(data.pages);
   };
   useEffect(() => {
     fetchApi();
-  }, []);
+  }, [page]);
   useEffect(() => {
     setFiltered(data);
   }, [data]);
@@ -61,14 +61,9 @@ const Students = () => {
   //     setStudentData(res.data);
   //     editOpenModal();
   //   };
-  //   const handlePrev = () => {
-  //     if (page > 1) {
-  //       setPage(page - 1);
-  //     }
-  //   };
-  //   const handleNext = () => {
-  //     setPage(page + 1);
-  //   };
+  const handlePage = (e, value) => {
+    setPage(value);
+  };
 
   return (
     <>
@@ -94,6 +89,19 @@ const Students = () => {
             editStudent={editStudent}
             editCloseModal={editCloseModal}
           /> */}
+          <Box
+            width={"100%"}
+            sx={{ display: "flex", justifyContent: "center" }}
+          >
+            <Stack spacing={2} mt={3} mb={10}>
+              <Pagination
+                count={pages}
+                page={page}
+                color="primary"
+                onChange={handlePage}
+              />
+            </Stack>
+          </Box>
         </Container>
       </Box>
     </>

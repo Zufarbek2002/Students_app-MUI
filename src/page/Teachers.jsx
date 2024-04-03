@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Container, Typography } from "@mui/material";
+import { Container, Pagination, Stack, Typography } from "@mui/material";
 import { Dashboard } from "../components/Dashboard";
 import Box from "@mui/material/Box";
 import { useEffect, useState } from "react";
@@ -13,6 +13,7 @@ const Teachers = () => {
   const [filtered, setFiltered] = useState(data);
   const [addModal, setAddModal] = useState(false);
   const [page, setPage] = useState(1);
+  const [pages, setPages] = useState();
 
   const fetchApi = async () => {
     const res = await axios.get(
@@ -20,10 +21,11 @@ const Teachers = () => {
     );
     const data = await res.data;
     setData(data.data);
+    setPages(data.pages);
   };
   useEffect(() => {
     fetchApi();
-  }, []);
+  }, [page]);
   useEffect(() => {
     setFiltered(data);
   }, [data]);
@@ -44,6 +46,9 @@ const Teachers = () => {
       axios.post("http://localhost:3000/teachers", student);
     }
   };
+  const handlePage = (e, value) => {
+    setPage(value);
+  };
   return (
     <div>
       <Box sx={{ display: "flex" }}>
@@ -63,6 +68,19 @@ const Teachers = () => {
             addStudent={addStudent}
             addCloseModal={addCloseModal}
           />
+          <Box
+            width={"100%"}
+            sx={{ display: "flex", justifyContent: "center" }}
+          >
+            <Stack spacing={2} mt={3} mb={10}>
+              <Pagination
+                count={pages}
+                page={page}
+                color="primary"
+                onChange={handlePage}
+              />
+            </Stack>
+          </Box>
         </Container>
       </Box>
     </div>

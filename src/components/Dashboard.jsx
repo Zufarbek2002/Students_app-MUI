@@ -12,7 +12,6 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import LoginIcon from "@mui/icons-material/Login";
 import { mainListItems } from "./ListItems";
 import { Link } from "react-router-dom";
 
@@ -66,7 +65,6 @@ const defaultTheme = createTheme();
 
 export const Dashboard = () => {
   const [open, setOpen] = React.useState(true);
-  const [bool] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -102,17 +100,11 @@ export const Dashboard = () => {
             >
               Dashboard
             </Typography>
-            {bool ? (
-              <Link to="/profile">
-                <IconButton color="inherit">
-                  <AccountCircleIcon fontSize="large" />
-                </IconButton>
-              </Link>
-            ) : (
+            <Link to="/profile">
               <IconButton color="inherit">
-                <LoginIcon fontSize="large" />
+                <AccountCircleIcon fontSize="large" />
               </IconButton>
-            )}
+            </Link>
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
