@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 
-const StudentsList = ({ setFiltered, filtered }) => {
+const StudentsList = ({ setFiltered, filtered, handleEdit }) => {
   const handleDelete = async (id) => {
     if (confirm("Are you sure delete")) {
       setFiltered(filtered.filter((student) => student.id !== id));
@@ -48,8 +48,8 @@ const StudentsList = ({ setFiltered, filtered }) => {
                 >
                   Delete
                 </Button>
-                <Button variant="contained">Edit</Button>
-                {/* onClick={() => handleEdit(student.id)} */}
+                <Button variant="contained" onClick={() => handleEdit(student.id)}>Edit</Button>
+
               </TableCell>
             </TableRow>
           ))}

@@ -4,7 +4,7 @@
       "id": "1",
       "firstname": "John",
       "lastname": "Doe",
-      "group": "React N45"
+      "group": "React N34"
     },
     {
       "id": "2",
@@ -22,13 +22,7 @@
       "id": "4",
       "firstname": "John",
       "lastname": "White",
-      "group": "React N34"
-    },
-    {
-      "id": "2f02",
-      "firstname": "Zufarbek",
-      "lastname": "Yoldashev",
-      "group": "React N34"
+      "group": "React N45"
     },
     {
       "id": "5",
@@ -47,6 +41,18 @@
       "firstname": "John",
       "lastname": "White",
       "group": "React N34"
+    },
+    {
+      "id": "a563",
+      "firstname": "Zufarbek",
+      "lastname": "Yoldashev",
+      "group": "React N45"
+    },
+    {
+      "id": "b5b0",
+      "firstname": "Zufarbek",
+      "lastname": "Yoldashev",
+      "group": "React N35"
     }
   ],
   "teachers": [
@@ -54,8 +60,8 @@
       "id": "1",
       "firstname": "John",
       "lastname": "Doe",
-      "group": "React N45",
-      "level": "Senior"
+      "group": "React N34",
+      "level": "Middle"
     },
     {
       "id": "2",
@@ -77,6 +83,20 @@
       "lastname": "White",
       "group": "React N34",
       "level": "Junior"
+    },
+    {
+      "id": "4799",
+      "firstname": "Zufarbek",
+      "lastname": "Yoldashev",
+      "group": "React N45",
+      "level": "Junior"
+    },
+    {
+      "id": "e77a",
+      "firstname": "Alex",
+      "lastname": "Brown",
+      "group": "React N35",
+      "level": "Middle"
     }
   ]
 }

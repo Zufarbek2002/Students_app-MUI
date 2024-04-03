@@ -7,6 +7,7 @@ import axios from "axios";
 import TeachersList from "../components/teachersComp/TeachersList";
 import TeacherSearchComp from "../components/teachersComp/TeacherSearchComp";
 import TeacherModalComp from "../components/teachersComp/TeacherModalComp";
+import TeacherEditModalComp from "../components/teachersComp/TeacherEditModalComp";
 
 const Teachers = () => {
   const [data, setData] = useState([]);
@@ -14,6 +15,8 @@ const Teachers = () => {
   const [addModal, setAddModal] = useState(false);
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState();
+  const [studentData, setStudentData] = useState([]);
+  const [editModal, setEditModal] = useState(false);
 
   const fetchApi = async () => {
     const res = await axios.get(
@@ -25,7 +28,7 @@ const Teachers = () => {
   };
   useEffect(() => {
     fetchApi();
-  }, [page]);
+  }, [page, addModal, editModal]);
   useEffect(() => {
     setFiltered(data);
   }, [data]);
@@ -36,6 +39,12 @@ const Teachers = () => {
   const addCloseModal = () => {
     setAddModal(false);
   };
+  const editOpenModal = () => {
+    setEditModal(true);
+  };
+  const editCloseModal = () => {
+    setEditModal(false);
+  };
   const addStudent = (student) => {
     if (
       student.firstname.length >= 2 &&
@@ -45,6 +54,11 @@ const Teachers = () => {
     ) {
       axios.post("http://localhost:3000/teachers", student);
     }
+  };
+  const handleEdit = async (id) => {
+    const res = await axios(`http://localhost:3000/teachers/${id}`);
+    setStudentData(res.data);
+    editOpenModal();
   };
   const handlePage = (e, value) => {
     setPage(value);
@@ -62,11 +76,16 @@ const Teachers = () => {
             data={data}
             setFiltered={setFiltered}
           />
-          <TeachersList filtered={filtered} setFiltered={setFiltered} />
+          <TeachersList filtered={filtered} setFiltered={setFiltered} handleEdit={handleEdit}/>
           <TeacherModalComp
             addModal={addModal}
             addStudent={addStudent}
             addCloseModal={addCloseModal}
+          />
+          <TeacherEditModalComp
+            editModal={editModal}
+            editCloseModal={editCloseModal}
+            studentData={studentData}
           />
           <Box
             width={"100%"}
