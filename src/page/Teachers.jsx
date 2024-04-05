@@ -10,6 +10,7 @@ import TeacherModalComp from "../components/teachersComp/TeacherModalComp";
 import TeacherEditModalComp from "../components/teachersComp/TeacherEditModalComp";
 
 const Teachers = () => {
+  const [dataAll, setDataAll] = useState([]);
   const [data, setData] = useState([]);
   const [filtered, setFiltered] = useState(data);
   const [addModal, setAddModal] = useState(false);
@@ -18,6 +19,11 @@ const Teachers = () => {
   const [studentData, setStudentData] = useState([]);
   const [editModal, setEditModal] = useState(false);
 
+  const fetchApiAll = async () => {
+    const res = await axios.get("http://localhost:3000/teachers");
+    const data = await res.data;
+    setDataAll(data);
+  };
   const fetchApi = async () => {
     const res = await axios.get(
       `http://localhost:3000/teachers?_page=${page}&_per_page=5`
@@ -26,6 +32,10 @@ const Teachers = () => {
     setData(data.data);
     setPages(data.pages);
   };
+  useEffect(() => {
+    fetchApi();
+    fetchApiAll();
+  }, []);
   useEffect(() => {
     fetchApi();
   }, [page, addModal, editModal]);
@@ -73,6 +83,7 @@ const Teachers = () => {
           </Typography>
           <TeacherSearchComp
             addOpenModal={addOpenModal}
+            dataAll={dataAll}
             data={data}
             setFiltered={setFiltered}
           />

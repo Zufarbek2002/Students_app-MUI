@@ -9,16 +9,19 @@ import {
   TextField,
 } from "@mui/material";
 
-const SearchComp = ({ addOpenModal, data, setFiltered }) => {
+const SearchComp = ({ addOpenModal, dataAll, data, setFiltered }) => {
   const handleSearch = (e) => {
     const text = e.target.value.toLowerCase().trim();
-    setFiltered(
-      data.filter(
-        (e) =>
-          e.firstname.toLowerCase().includes(text) ||
-          e.lastname.toLowerCase().includes(text)
-      )
-    );
+    if (text) {
+      setFiltered(
+        dataAll.filter(
+          (e) =>
+            e.firstname.toLowerCase().includes(text) ||
+            e.lastname.toLowerCase().includes(text)
+        )
+      );
+    }
+    else setFiltered(data)
   };
   const handleFilter = (e) => {
     const group = e.target.value;
@@ -26,7 +29,7 @@ const SearchComp = ({ addOpenModal, data, setFiltered }) => {
     if (group == "All") {
       filteredValue = data;
     } else {
-      filteredValue = data.filter((data) => data.group == group);
+      filteredValue = dataAll.filter((data) => data.group == group);
     }
     setFiltered(filteredValue);
   };

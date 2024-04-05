@@ -10,6 +10,7 @@ import StudentsList from "../components/studentsComp/StudentsList";
 import EditModalComp from "../components/studentsComp/EditModalComp";
 
 const Students = () => {
+  const [dataAll, setDataAll] = useState([]);
   const [data, setData] = useState([]);
   const [filtered, setFiltered] = useState(data);
   const [addModal, setAddModal] = useState(false);
@@ -18,6 +19,11 @@ const Students = () => {
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState();
 
+  const fetchApiAll = async () => {
+    const res = await axios.get("http://localhost:3000/students");
+    const data = await res.data;
+    setDataAll(data);
+  };
   const fetchApi = async () => {
     const res = await axios.get(
       `http://localhost:3000/students?_page=${page}&_per_page=5`
@@ -28,6 +34,7 @@ const Students = () => {
   };
   useEffect(() => {
     fetchApi();
+    fetchApiAll();
   }, []);
   useEffect(() => {
     fetchApi();
@@ -77,10 +84,15 @@ const Students = () => {
           </Typography>
           <SearchComp
             addOpenModal={addOpenModal}
+            dataAll={dataAll}
             data={data}
             setFiltered={setFiltered}
           />
-          <StudentsList filtered={filtered} setFiltered={setFiltered} handleEdit={handleEdit} />
+          <StudentsList
+            filtered={filtered}
+            setFiltered={setFiltered}
+            handleEdit={handleEdit}
+          />
           <ModalComp
             addModal={addModal}
             addStudent={addStudent}

@@ -21,9 +21,8 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 const defaultTheme = createTheme();
 
 const Login = () => {
-  const { user } = useAuth();
+  const { user, login } = useAuth();
   const navigate = useNavigate();
-  const { login } = useAuth();
   const [data, setData] = useState({
     username: "",
     password: "",
