@@ -56,13 +56,7 @@ const Students = () => {
     setEditModal(false);
   };
   const addStudent = (student) => {
-    if (
-      student.firstname.length >= 2 &&
-      student.lastname.length >= 2 &&
-      student.group !== ""
-    ) {
-      axios.post("http://localhost:3000/students", student);
-    }
+    axios.post("http://localhost:3000/students", student);
   };
 
   const handleEdit = async (id) => {

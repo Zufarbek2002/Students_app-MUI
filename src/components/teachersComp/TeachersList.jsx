@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import { Delete, Edit } from "@mui/icons-material";
 import {
   Button,
   Paper,
@@ -48,9 +49,14 @@ const TeachersList = ({ setFiltered, filtered, handleEdit }) => {
                   color="error"
                   onClick={() => handleDelete(student.id)}
                 >
-                  Delete
+                  Delete <Delete />
                 </Button>
-                <Button variant="contained" onClick={() => handleEdit(student.id)}>Edit</Button>
+                <Button
+                  variant="contained"
+                  onClick={() => handleEdit(student.id)}
+                >
+                  Edit <Edit fontSize="small" />
+                </Button>
               </TableCell>
             </TableRow>
           ))}

@@ -27,7 +27,7 @@ const Profile = () => {
             }}
           >
             <Typography variant="h5">
-              Username: {user && user.username}
+              Username: {user && user.name}
             </Typography>
             <Typography variant="h5">
               Password: {user && user.password}

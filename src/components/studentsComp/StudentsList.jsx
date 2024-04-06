@@ -10,6 +10,7 @@ import {
   TableRow,
 } from "@mui/material";
 import axios from "axios";
+import { Delete, Edit } from "@mui/icons-material";
 
 const StudentsList = ({ setFiltered, filtered, handleEdit }) => {
   const handleDelete = async (id) => {
@@ -46,10 +47,15 @@ const StudentsList = ({ setFiltered, filtered, handleEdit }) => {
                   color="error"
                   onClick={() => handleDelete(student.id)}
                 >
-                  Delete
+                  <span>Delete</span> <Delete />
                 </Button>
-                <Button variant="contained" onClick={() => handleEdit(student.id)}>Edit</Button>
-
+                <Button
+                  variant="contained"
+                  onClick={() => handleEdit(student.id)}
+                  sx={{ display: "flex", gap: 1, alignItems: "center" }}
+                >
+                  <span>Edit</span> <Edit fontSize="small" />
+                </Button>
               </TableCell>
             </TableRow>
           ))}

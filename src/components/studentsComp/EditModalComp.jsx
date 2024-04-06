@@ -39,14 +39,20 @@ const EditModalComp = ({ editModal, editCloseModal, studentData }) => {
       [e.target.id]: e.target.value,
     });
   };
-  const editStudent = async(id) => {
-    await axios.put(`http://localhost:3000/students/${id}`, student);
-    editCloseModal();
+  const editStudent = async (id) => {
+    if (
+      student.firstname.length >= 2 &&
+      student.lastname.length >= 2 &&
+      student.group !== ""
+    ) {
+      await axios.put(`http://localhost:3000/students/${id}`, student);
+      editCloseModal();
+    } else alert("Firstname or Lastname less 2 letters");
   };
 
   return (
     <div>
-      <Dialog open={editModal}>
+      <Dialog open={editModal} onClose={editCloseModal}>
         <DialogTitle>
           <Typography>Edit modal</Typography>
           <IconButton
@@ -63,7 +69,7 @@ const EditModalComp = ({ editModal, editCloseModal, studentData }) => {
           </IconButton>
         </DialogTitle>
         <DialogContent sx={{ width: "100%", mt: 2 }}>
-          <Grid container spacing={2} direction={"column"}>
+          <Grid container spacing={2} direction={"column"} sx={{ pt: "10px" }}>
             <Grid item>
               <TextField
                 value={student.firstname}
@@ -72,7 +78,10 @@ const EditModalComp = ({ editModal, editCloseModal, studentData }) => {
                 id="firstname"
                 label="Firstname"
                 size="small"
-              ></TextField>
+              />
+              {!student.firstname && (
+                <div className="errors">Firstname is required</div>
+              )}
             </Grid>
             <Grid item>
               <TextField
@@ -82,7 +91,10 @@ const EditModalComp = ({ editModal, editCloseModal, studentData }) => {
                 id="lastname"
                 label="Lastname"
                 size="small"
-              ></TextField>
+              />
+              {!student.lastname && (
+                <div className="errors">Lastname is required</div>
+              )}
             </Grid>
             <Grid item>
               <FormControl fullWidth>

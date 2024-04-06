@@ -13,38 +13,33 @@ import {
   Select,
   TextField,
   Typography,
+  Box,
 } from "@mui/material";
-import { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
+import { useForm } from "react-hook-form";
 
 const ModalComp = ({ addModal, addCloseModal, addStudent }) => {
-  const [student, setStudent] = useState({
-    firstname: "",
-    lastname: "",
-    group: "",
-  });
+  const form = useForm();
+  const { register, handleSubmit, formState, setValue } = form;
+  const { errors } = formState;
 
-  const handleChange = (e) => {
-    setStudent({
-      ...student,
-      [e.target.id]: e.target.value.trim(),
-    });
-  };
-
-  const handleAdd = (e) => {
-    e.preventDefault();
-    addCloseModal();
-    addStudent(student);
-    setStudent({
-      firstname: "",
-      lastname: "",
-      group: "",
-    });
+  const onSubmit = (student) => {
+    if (
+      student.firstname.length >= 2 &&
+      student.lastname.length >= 2 &&
+      student.group !== ""
+    ) {
+      setValue("group", "");
+      setValue("firstname", "");
+      setValue("lastname", "");
+      addCloseModal();
+      addStudent(student);
+    } else alert("Firstname or Lastname less 2 letters");
   };
 
   return (
     <div>
-      <Dialog open={addModal}>
+      <Dialog open={addModal} onClose={addCloseModal}>
         <DialogTitle>
           <Typography>Add modal</Typography>
           <IconButton
@@ -61,53 +56,84 @@ const ModalComp = ({ addModal, addCloseModal, addStudent }) => {
           </IconButton>
         </DialogTitle>
         <DialogContent sx={{ width: "100%", mt: 2 }}>
-          <Grid container spacing={2} direction={"column"}>
-            <Grid item>
-              <TextField
-                value={student.firstname}
-                onChange={handleChange}
-                fullWidth
-                id="firstname"
-                label="Firstname"
-                size="small"
-              ></TextField>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleSubmit(onSubmit)}
+            sx={{ mt: 1 }}
+          >
+            <Grid container spacing={2} direction={"column"}>
+              <Grid item>
+                <TextField
+                  required
+                  fullWidth
+                  id="firstname"
+                  label="Firstname"
+                  size="small"
+                  {...register("firstname", {
+                    required: {
+                      value: true,
+                      message: "Firstname is required",
+                    },
+                  })}
+                />
+                <div className="errors">
+                  {errors.firstname && errors.firstname.message}
+                </div>
+              </Grid>
+              <Grid item>
+                <TextField
+                  required
+                  fullWidth
+                  id="lastname"
+                  label="Lastname"
+                  size="small"
+                  {...register("lastname", {
+                    required: {
+                      value: true,
+                      message: "Lastname is required",
+                    },
+                  })}
+                />
+                <div className="errors">
+                  {errors.lastname && errors.lastname.message}
+                </div>
+              </Grid>
+              <Grid item>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Group</InputLabel>
+                  <Select
+                    required
+                    id="group"
+                    labelId="demo-simple-select-label"
+                    label="Group"
+                    {...register("group", {
+                      required: {
+                        value: true,
+                        message: "Group is required",
+                      },
+                    })}
+                  >
+                    <MenuItem value="All">All</MenuItem>
+                    <MenuItem value="React N34">React N34</MenuItem>
+                    <MenuItem value="React N35">React N35</MenuItem>
+                    <MenuItem value="React N45">React N45</MenuItem>
+                  </Select>
+                  <div className="errors">
+                    {errors.group && errors.group.message}
+                  </div>
+                </FormControl>
+              </Grid>
+              <DialogActions>
+                <Button variant="contained" onClick={addCloseModal}>
+                  Close
+                </Button>
+                <Button variant="contained" type="submit" color="success">
+                  Add
+                </Button>
+              </DialogActions>
             </Grid>
-            <Grid item>
-              <TextField
-                value={student.lastname}
-                onChange={handleChange}
-                fullWidth
-                id="lastname"
-                label="Lastname"
-                size="small"
-              ></TextField>
-            </Grid>
-            <Grid item>
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Group</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  label="Group"
-                  onChange={(e) =>
-                    setStudent({ ...student, group: e.target.value })
-                  }
-                >
-                  <MenuItem value="All">All</MenuItem>
-                  <MenuItem value="React N34">React N34</MenuItem>
-                  <MenuItem value="React N35">React N35</MenuItem>
-                  <MenuItem value="React N45">React N45</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <DialogActions>
-              <Button variant="contained" onClick={addCloseModal}>
-                Close
-              </Button>
-              <Button variant="contained" color="success" onClick={handleAdd}>
-                Add
-              </Button>
-            </DialogActions>
-          </Grid>
+          </Box>
         </DialogContent>
       </Dialog>
     </div>

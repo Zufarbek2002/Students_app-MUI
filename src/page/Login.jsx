@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useAuth } from "../components/Auth";
 import { Navigate, useNavigate } from "react-router-dom";
 import {
@@ -17,24 +16,25 @@ import {
   createTheme,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { useForm } from "react-hook-form";
 
 const defaultTheme = createTheme();
 
 const Login = () => {
+  const form = useForm();
+  const { register, handleSubmit, formState } = form;
+  const { errors } = formState;
   const { user, login } = useAuth();
   const navigate = useNavigate();
-  const [data, setData] = useState({
-    username: "",
-    password: "",
-  });
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (data.username.length >= 4 && data.password.length >= 4) {
+
+  const onSubmit = (data) => {
+    if (data.name.length >= 4 && data.password.length >= 4) {
       localStorage.setItem("data", JSON.stringify(data));
       login(data);
       navigate("/");
     } else return alert("Username or password length to short! (more 4)");
   };
+
   if (!user) {
     return (
       <ThemeProvider theme={defaultTheme}>
@@ -56,34 +56,52 @@ const Login = () => {
             </Typography>
             <Box
               component="form"
-              onSubmit={handleSubmit}
+              onSubmit={handleSubmit(onSubmit)}
               noValidate
-              sx={{ mt: 1 }}
+              sx={{ mt: 1, width: "100%" }}
             >
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="name"
-                label="Username"
-                name="name"
-                autoComplete="name"
-                autoFocus
-                value={data.username}
-                onChange={(e) => setData({ ...data, username: e.target.value })}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                value={data.password}
-                onChange={(e) => setData({ ...data, password: e.target.value })}
-              />
+              <div>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="name"
+                  label="Username"
+                  name="name"
+                  autoComplete="name"
+                  autoFocus
+                  {...register("name", {
+                    required: {
+                      value: true,
+                      message: "Name is required",
+                    },
+                  })}
+                />
+                <span style={{ color: "red" }}>
+                  {errors.name && errors.name.message}
+                </span>
+              </div>
+              <div>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  {...register("password", {
+                    required: {
+                      value: true,
+                      message: "Password is required",
+                    },
+                  })}
+                />
+                <span style={{ color: "red" }}>
+                  {errors.password && errors.password.message}
+                </span>
+              </div>
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"

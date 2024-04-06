@@ -1,12 +1,6 @@
 {
   "students": [
     {
-      "id": "1",
-      "firstname": "John",
-      "lastname": "Doe",
-      "group": "React N34"
-    },
-    {
       "id": "2",
       "firstname": "Tom",
       "lastname": "Smith",
@@ -43,22 +37,16 @@
       "group": "React N34"
     },
     {
-      "id": "a563",
+      "id": "aac1",
       "firstname": "Zufarbek",
       "lastname": "Yoldashev",
-      "group": "React N45"
-    },
-    {
-      "id": "b5b0",
-      "firstname": "Zufarbek",
-      "lastname": "Yoldashev",
-      "group": "React N35"
+      "group": "React N34"
     }
   ],
   "teachers": [
     {
       "id": "1",
-      "firstname": "John",
+      "firstname": "ff",
       "lastname": "Doe",
       "group": "React N34",
       "level": "Middle"

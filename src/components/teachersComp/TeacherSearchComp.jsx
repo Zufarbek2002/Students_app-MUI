@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import { Add } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -20,8 +21,7 @@ const TeacherSearchComp = ({ addOpenModal, data, dataAll, setFiltered }) => {
             e.lastname.toLowerCase().includes(text)
         )
       );
-    }
-    else setFiltered(data)
+    } else setFiltered(data);
   };
   const handleFilter = (e) => {
     const group = e.target.value;
@@ -102,7 +102,7 @@ const TeacherSearchComp = ({ addOpenModal, data, dataAll, setFiltered }) => {
         color="success"
         onClick={addOpenModal}
       >
-        Add
+        Add <Add />
       </Button>
     </Box>
   );
