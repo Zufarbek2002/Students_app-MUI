@@ -9,13 +9,23 @@ import {
   Select,
   TextField,
 } from "@mui/material";
+import { fetchUsers } from "../../redux/users/userActions";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 
-const SearchComp = ({ addOpenModal, dataAll, data, setFiltered }) => {
+
+const SearchComp = ({ addOpenModal, data, setFiltered }) => {
+  const { user } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchUsers());
+  }, []);
   const handleSearch = (e) => {
     const text = e.target.value.toLowerCase().trim();
     if (text) {
       setFiltered(
-        dataAll.filter(
+        user.filter(
           (e) =>
             e.firstname.toLowerCase().includes(text) ||
             e.lastname.toLowerCase().includes(text)
@@ -29,7 +39,7 @@ const SearchComp = ({ addOpenModal, dataAll, data, setFiltered }) => {
     if (group == "All") {
       filteredValue = data;
     } else {
-      filteredValue = dataAll.filter((data) => data.group == group);
+      filteredValue = user.filter((data) => data.group == group);
     }
     setFiltered(filteredValue);
   };

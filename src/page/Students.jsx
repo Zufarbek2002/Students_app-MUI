@@ -8,9 +8,10 @@ import SearchComp from "../components/studentsComp/SearchComp";
 import ModalComp from "../components/studentsComp/ModalComp";
 import StudentsList from "../components/studentsComp/StudentsList";
 import EditModalComp from "../components/studentsComp/EditModalComp";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUsers } from "../redux/users/userActions";
 
 const Students = () => {
-  const [dataAll, setDataAll] = useState([]);
   const [data, setData] = useState([]);
   const [filtered, setFiltered] = useState(data);
   const [addModal, setAddModal] = useState(false);
@@ -19,11 +20,9 @@ const Students = () => {
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState();
 
-  const fetchApiAll = async () => {
-    const res = await axios.get("http://localhost:3000/students");
-    const data = await res.data;
-    setDataAll(data);
-  };
+  const { loading, error } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
   const fetchApi = async () => {
     const res = await axios.get(
       `http://localhost:3000/students?_page=${page}&_per_page=5`
@@ -34,7 +33,7 @@ const Students = () => {
   };
   useEffect(() => {
     fetchApi();
-    fetchApiAll();
+    dispatch(fetchUsers());
   }, []);
   useEffect(() => {
     fetchApi();
@@ -70,6 +69,9 @@ const Students = () => {
 
   return (
     <>
+      {loading && <h1 style={{position: 'absolute', top: '370px', width:'100%', textAlign: 'center'}}>Loading ...</h1>}
+      {error && <h1 style={{position: 'absolute', top: '370px', width:'100%', textAlign: 'center', color: 'red'}}>{error}</h1>}
+
       <Box sx={{ display: "flex" }}>
         <Dashboard />
         <Container maxWidth="xl" sx={{ mt: 12 }}>
@@ -78,7 +80,6 @@ const Students = () => {
           </Typography>
           <SearchComp
             addOpenModal={addOpenModal}
-            dataAll={dataAll}
             data={data}
             setFiltered={setFiltered}
           />

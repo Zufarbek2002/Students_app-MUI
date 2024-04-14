@@ -7,19 +7,51 @@ import Login from "./page/Login";
 import Profile from "./page/Profile";
 import { AuthProvider } from "./components/Auth";
 import RequireAuth from "./components/RequireAuth";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 const App = () => {
   return (
-    <Router>
-      <AuthProvider>
-        <Routes>
-          <Route path="/" element={<RequireAuth><Home /></RequireAuth>} />
-          <Route path="/teachers" element={<RequireAuth><Teachers /></RequireAuth>} />
-          <Route path="/students" element={<RequireAuth><Students /></RequireAuth>} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/profile" element={<RequireAuth><Profile /></RequireAuth>} />
-        </Routes>
-      </AuthProvider>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <AuthProvider>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <RequireAuth>
+                  <Home />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/teachers"
+              element={
+                <RequireAuth>
+                  <Teachers />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/students"
+              element={
+                <RequireAuth>
+                  <Students />
+                </RequireAuth>
+              }
+            />
+            <Route path="/login" element={<Login />} />
+            <Route
+              path="/profile"
+              element={
+                <RequireAuth>
+                  <Profile />
+                </RequireAuth>
+              }
+            />
+          </Routes>
+        </AuthProvider>
+      </Router>
+    </Provider>
   );
 };
 
