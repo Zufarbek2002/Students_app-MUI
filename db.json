@@ -46,7 +46,7 @@
   "teachers": [
     {
       "id": "1",
-      "firstname": "ff",
+      "firstname": "John",
       "lastname": "Doe",
       "group": "React N34",
       "level": "Middle"
@@ -80,10 +80,10 @@
       "level": "Junior"
     },
     {
-      "id": "e77a",
+      "id": "bfb7",
       "firstname": "Alex",
       "lastname": "Brown",
-      "group": "React N35",
+      "group": "React N34",
       "level": "Middle"
     }
   ]

@@ -17,10 +17,12 @@ import {
   Box,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import axios from "axios";
+import { useDispatch } from "react-redux";
+import { editData } from "../../app/teachers/teacherSlice";
 
-const TeacherEditModalComp = ({ editModal, editCloseModal, studentData }) => {
-  const [student, setStudent] = useState({
+const TeacherEditModalComp = ({ editModal, editCloseModal, teacherDatas }) => {
+  const dispatch = useDispatch();
+  const [teacher, setTeacher] = useState({
     id: null,
     firstname: "",
     lastname: "",
@@ -28,28 +30,29 @@ const TeacherEditModalComp = ({ editModal, editCloseModal, studentData }) => {
     level: "",
   });
   useEffect(() => {
-    setStudent({
-      id: studentData.id,
-      firstname: studentData.firstname,
-      lastname: studentData.lastname,
-      group: studentData.group,
-      level: studentData.level,
+    setTeacher({
+      id: teacherDatas.id,
+      firstname: teacherDatas.firstname,
+      lastname: teacherDatas.lastname,
+      group: teacherDatas.group,
+      level: teacherDatas.level,
     });
-  }, [studentData]);
+  }, [teacherDatas]);
   const handleChange = (e) => {
-    setStudent({
-      ...student,
+    setTeacher({
+      ...teacher,
       [e.target.id]: e.target.value,
     });
   };
-  const editStudent = async (id) => {
+  const editStudent = (e) => {
+    e.preventDefault()
     if (
-      student.firstname.length >= 2 &&
-      student.lastname.length >= 2 &&
-      student.group !== "" &&
-      student.level !== ""
+      teacher.firstname.length >= 2 &&
+      teacher.lastname.length >= 2 &&
+      teacher.group !== "" &&
+      teacher.level !== ""
     ) {
-      await axios.put(`http://localhost:3000/teachers/${id}`, student);
+      dispatch(editData(teacher));
       editCloseModal();
     }
   };
@@ -77,28 +80,28 @@ const TeacherEditModalComp = ({ editModal, editCloseModal, studentData }) => {
               <Grid item>
                 <TextField
                   required
-                  value={student.firstname}
+                  value={teacher.firstname}
                   onChange={handleChange}
                   fullWidth
                   id="firstname"
                   label="Firstname"
                   size="small"
                 />
-                {!student.firstname && (
+                {!teacher.firstname && (
                   <div style={{ color: "red" }}>Firstname is required</div>
                 )}
               </Grid>
               <Grid item>
                 <TextField
                   required
-                  value={student.lastname}
+                  value={teacher.lastname}
                   onChange={handleChange}
                   fullWidth
                   id="lastname"
                   label="Lastname"
                   size="small"
                 />
-                {!student.lastname && (
+                {!teacher.lastname && (
                   <div style={{ color: "red" }}>Lastname is required</div>
                 )}
               </Grid>
@@ -108,10 +111,10 @@ const TeacherEditModalComp = ({ editModal, editCloseModal, studentData }) => {
                   <Select
                     labelId="demo-simple-select-label"
                     label="Group"
-                    value={student.group}
-                    defaultValue={studentData.group}
+                    value={teacher.group}
+                    defaultValue={teacherDatas.group}
                     onChange={(e) =>
-                      setStudent({ ...student, group: e.target.value })
+                      setTeacher({ ...teacher, group: e.target.value })
                     }
                   >
                     <MenuItem value="React N34">React N34</MenuItem>
@@ -126,10 +129,10 @@ const TeacherEditModalComp = ({ editModal, editCloseModal, studentData }) => {
                   <Select
                     labelId="demo-simple-select-label"
                     label="Group"
-                    value={student.level}
-                    defaultValue={studentData.level}
+                    value={teacher.level}
+                    defaultValue={teacherDatas.level}
                     onChange={(e) =>
-                      setStudent({ ...student, level: e.target.value })
+                      setTeacher({ ...teacher, level: e.target.value })
                     }
                   >
                     <MenuItem value="Senior">Senior</MenuItem>
@@ -146,10 +149,7 @@ const TeacherEditModalComp = ({ editModal, editCloseModal, studentData }) => {
                   variant="contained"
                   color="success"
                   type="submit"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    editStudent(student.id);
-                  }}
+                  onClick={editStudent}
                 >
                   Edit
                 </Button>

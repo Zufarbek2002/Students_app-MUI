@@ -17,18 +17,28 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { addData } from "../../app/teachers/teacherSlice";
 
-const TeacherModalComp = ({ addModal, addCloseModal, addStudent }) => {
+const TeacherModalComp = ({ addModal, addCloseModal }) => {
+  const dispatch = useDispatch();
   const form = useForm();
   const { register, handleSubmit, setValue, formState } = form;
   const { errors } = formState;
-  const onSubmit = (student) => {
-    addStudent(student);
-    addCloseModal();
-    setValue("firstname", "");
-    setValue("lastname", "");
-    setValue("group", "");
-    setValue("level", "");
+  const onSubmit = (teacher) => {
+    if (
+      teacher.firstname.length >= 2 &&
+      teacher.lastname.length >= 2 &&
+      teacher.group !== "" &&
+      teacher.level !== ""
+    ) {
+      dispatch(addData(teacher));
+      setValue("firstname", "");
+      setValue("lastname", "");
+      setValue("group", "");
+      setValue("level", "");
+      addCloseModal();
+    }
   };
 
   return (

@@ -18,9 +18,11 @@ import { fetchData } from "../../app/students/studentSlice";
 const SearchComp = ({ addOpenModal, setFiltered }) => {
   const { studentData } = useSelector((state) => state.student);
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(fetchData());
   }, []);
+
   const handleSearch = (e) => {
     const text = e.target.value.toLowerCase().trim();
     if (text) {

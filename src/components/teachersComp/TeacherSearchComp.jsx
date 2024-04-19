@@ -1,5 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
-import { Add } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -9,27 +9,38 @@ import {
   Select,
   TextField,
 } from "@mui/material";
+import { Add } from "@mui/icons-material";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchData } from "../../app/teachers/teacherSlice";
 
-const TeacherSearchComp = ({ addOpenModal, data, dataAll, setFiltered }) => {
+const TeacherSearchComp = ({ addOpenModal, setFiltered }) => {
+  const { teacherData } = useSelector((state) => state.teacher);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchData());
+  }, []);
+
   const handleSearch = (e) => {
     const text = e.target.value.toLowerCase().trim();
     if (text) {
       setFiltered(
-        dataAll.filter(
+        teacherData.filter(
           (e) =>
             e.firstname.toLowerCase().includes(text) ||
             e.lastname.toLowerCase().includes(text)
         )
       );
-    } else setFiltered(data);
+    } else setFiltered(teacherData);
   };
   const handleFilter = (e) => {
     const group = e.target.value;
     let filteredValue;
     if (group == "All") {
-      filteredValue = data;
+      filteredValue = teacherData;
     } else {
-      filteredValue = dataAll.filter((data) => data.group == group);
+      filteredValue = teacherData.filter((data) => data.group == group);
     }
     setFiltered(filteredValue);
   };
@@ -38,9 +49,9 @@ const TeacherSearchComp = ({ addOpenModal, data, dataAll, setFiltered }) => {
     const level = e.target.value;
     let filteredValue;
     if (level == "All") {
-      filteredValue = data;
+      filteredValue = teacherData;
     } else {
-      filteredValue = dataAll.filter((data) => data.level == level);
+      filteredValue = teacherData.filter((data) => data.level == level);
     }
     setFiltered(filteredValue);
   };

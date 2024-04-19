@@ -15,35 +15,14 @@ const Teachers = () => {
   const { loading, teacherData, error } = useSelector((state) => state.teacher);
   const dispatch = useDispatch();
 
-  const [dataAll, setDataAll] = useState([]);
-  const [data, setData] = useState([]);
   const [filtered, setFiltered] = useState(teacherData);
   const [addModal, setAddModal] = useState(false);
   const [page, setPage] = useState(1);
-  const [pages, setPages] = useState();
-  const [studentData, setStudentData] = useState([]);
+  const [teacherDatas, setTeacherDatas] = useState([]);
   const [editModal, setEditModal] = useState(false);
 
   useEffect(() => {
     dispatch(fetchData());
-  }, []);
-
-  const fetchApiAll = async () => {
-    const res = await axios.get("http://localhost:3000/teachers");
-    const data = await res.data;
-    setDataAll(data);
-  };
-  const fetchApi = async () => {
-    const res = await axios.get(
-      `http://localhost:3000/teachers?_page=${page}&_per_page=5`
-    );
-    const data = await res.data;
-    setData(data.data);
-    setPages(data.pages);
-  };
-  useEffect(() => {
-    fetchApi();
-    fetchApiAll();
   }, []);
   useEffect(() => {
     dispatch(fetchData());
@@ -64,19 +43,10 @@ const Teachers = () => {
   const editCloseModal = () => {
     setEditModal(false);
   };
-  const addStudent = (student) => {
-    if (
-      student.firstname.length >= 2 &&
-      student.lastname.length >= 2 &&
-      student.group !== "" &&
-      student.level !== ""
-    ) {
-      axios.post("http://localhost:3000/teachers", student);
-    }
-  };
+
   const handleEdit = async (id) => {
     const res = await axios(`http://localhost:3000/teachers/${id}`);
-    setStudentData(res.data);
+    setTeacherDatas(res.data);
     editOpenModal();
   };
   const handlePage = (e, value) => {
@@ -118,8 +88,6 @@ const Teachers = () => {
           </Typography>
           <TeacherSearchComp
             addOpenModal={addOpenModal}
-            dataAll={dataAll}
-            data={data}
             setFiltered={setFiltered}
           />
           <TeachersList
@@ -127,27 +95,18 @@ const Teachers = () => {
             setFiltered={setFiltered}
             handleEdit={handleEdit}
           />
-          <TeacherModalComp
-            addModal={addModal}
-            addStudent={addStudent}
-            addCloseModal={addCloseModal}
-          />
+          <TeacherModalComp addModal={addModal} addCloseModal={addCloseModal} />
           <TeacherEditModalComp
             editModal={editModal}
             editCloseModal={editCloseModal}
-            studentData={studentData}
+            teacherDatas={teacherDatas}
           />
           <Box
             width={"100%"}
             sx={{ display: "flex", justifyContent: "center" }}
           >
             <Stack spacing={2} mt={3} mb={10}>
-              <Pagination
-                count={pages}
-                page={page}
-                color="primary"
-                onChange={handlePage}
-              />
+              <Pagination page={page} color="primary" onChange={handlePage} />
             </Stack>
           </Box>
         </Container>
