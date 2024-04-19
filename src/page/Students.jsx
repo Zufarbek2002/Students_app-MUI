@@ -1,42 +1,31 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Container, Pagination, Stack, Typography } from "@mui/material";
-import { Dashboard } from "../components/Dashboard";
-import Box from "@mui/material/Box";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import { Container, Pagination, Stack, Typography } from "@mui/material";
+import Box from "@mui/material/Box";
+import { Dashboard } from "../components/Dashboard";
 import SearchComp from "../components/studentsComp/SearchComp";
 import ModalComp from "../components/studentsComp/ModalComp";
 import StudentsList from "../components/studentsComp/StudentsList";
 import EditModalComp from "../components/studentsComp/EditModalComp";
-import { useDispatch, useSelector } from "react-redux";
 import { fetchData } from "../app/students/studentSlice";
 
 const Students = () => {
-  const [data, setData] = useState([]);
-  const [filtered, setFiltered] = useState(data);
+  const { loading, studentData, error } = useSelector((state) => state.student);
+  const dispatch = useDispatch();
+
+  const [filtered, setFiltered] = useState(studentData);
   const [addModal, setAddModal] = useState(false);
   const [studentDatas, setStudentData] = useState([]);
   const [editModal, setEditModal] = useState(false);
   const [page, setPage] = useState(1);
-  const [pages, setPages] = useState();
-  const { loading, studentData, error } = useSelector((state) => state.student);
-  // const { user } = useSelector((state) => state.student);
-  const dispatch = useDispatch();
-  const fetchApi = async () => {
-    // const res = await axios.get(
-    //   `http://localhost:3000/students?_page=${page}&_per_page=5`
-    // );
-    // const data = await res.data;
-    setData(studentData.data);
-    setPages(studentData.pages);
-  };
+
   useEffect(() => {
-    fetchApi();
     dispatch(fetchData());
-    // dispatch(fetchStudents(page))
   }, []);
   useEffect(() => {
-    fetchApi();
+    dispatch(fetchData())
   }, [page, addModal, editModal]);
   useEffect(() => {
     setFiltered(studentData);
@@ -80,7 +69,6 @@ const Students = () => {
           </Typography>
           <SearchComp
             addOpenModal={addOpenModal}
-            data={data}
             setFiltered={setFiltered}
           />
           <StudentsList
@@ -104,7 +92,6 @@ const Students = () => {
           >
             <Stack spacing={2} mt={3} mb={10}>
               <Pagination
-                count={pages}
                 page={page}
                 color="primary"
                 onChange={handlePage}

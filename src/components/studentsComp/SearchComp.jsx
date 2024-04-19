@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchData } from "../../app/students/studentSlice";
 
 
-const SearchComp = ({ addOpenModal, data, setFiltered }) => {
+const SearchComp = ({ addOpenModal, setFiltered }) => {
   const { studentData } = useSelector((state) => state.student);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -31,13 +31,13 @@ const SearchComp = ({ addOpenModal, data, setFiltered }) => {
             e.lastname.toLowerCase().includes(text)
         )
       );
-    } else setFiltered(data);
+    } else setFiltered(studentData);
   };
   const handleFilter = (e) => {
     const group = e.target.value;
     let filteredValue;
     if (group == "All") {
-      filteredValue = data;
+      filteredValue = studentData;
     } else {
       filteredValue = studentData.filter((data) => data.group == group);
     }
