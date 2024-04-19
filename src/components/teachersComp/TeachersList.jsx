@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-import { Delete, Edit } from "@mui/icons-material";
 import {
   Button,
   Paper,
@@ -10,16 +9,18 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import axios from "axios";
+import { Delete, Edit } from "@mui/icons-material";
+import { useDispatch } from "react-redux";
+import { deleteData } from "../../app/teachers/teacherSlice";
 
-const TeachersList = ({ setFiltered, filtered, handleEdit }) => {
+const TeachersList = ({ filtered, handleEdit }) => {
+  const dispatch = useDispatch();
   const handleDelete = async (id) => {
     if (confirm("Are you sure delete")) {
-      setFiltered(filtered.filter((student) => student.id !== id));
-      await axios.delete(`http://localhost:3000/teachers/${id}`);
+      dispatch(deleteData(id));
     }
   };
-// console.log(filtered)
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">

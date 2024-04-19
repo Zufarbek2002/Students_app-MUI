@@ -1,14 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Container, Pagination, Stack, Typography } from "@mui/material";
-import { Dashboard } from "../components/Dashboard";
-import Box from "@mui/material/Box";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Container, Pagination, Stack, Typography } from "@mui/material";
+import Box from "@mui/material/Box";
 import axios from "axios";
+import { Dashboard } from "../components/Dashboard";
 import TeachersList from "../components/teachersComp/TeachersList";
 import TeacherSearchComp from "../components/teachersComp/TeacherSearchComp";
 import TeacherModalComp from "../components/teachersComp/TeacherModalComp";
 import TeacherEditModalComp from "../components/teachersComp/TeacherEditModalComp";
-import { useDispatch, useSelector } from "react-redux";
 import { fetchData } from "../app/teachers/teacherSlice";
 
 const Teachers = () => {
