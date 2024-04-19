@@ -3,13 +3,13 @@ import axios from "axios"
 
 const initialState = {
     loading: false,
-    studentData: [],
+    teacherData: [],
     error: "",
 }
 
-export const fetchData = createAsyncThunk("student/fetchData", async () => {
+export const fetchData = createAsyncThunk("teacher/fetchData", async () => {
     try {
-        const res = await axios.get("http://localhost:3000/students")
+        const res = await axios.get("http://localhost:3000/teachers")
         const data = await res.data
         return data;
     } catch (error) {
@@ -17,9 +17,9 @@ export const fetchData = createAsyncThunk("student/fetchData", async () => {
     }
 })
 
-export const addData = createAsyncThunk("student/addData", async (student) => {
+export const addData = createAsyncThunk("teacher/addData", async (teacher) => {
     try {
-        const res = await axios.post("http://localhost:3000/students", student)
+        const res = await axios.post("http://localhost:3000/teachers", teacher)
         const data = await res.data
         return data;
     } catch (error) {
@@ -27,9 +27,9 @@ export const addData = createAsyncThunk("student/addData", async (student) => {
     }
 })
 
-export const editData = createAsyncThunk("student/editData", async (student) => {
+export const editData = createAsyncThunk("teacher/editData", async (teacher) => {
     try {
-        const res = await axios.put(`http://localhost:3000/students/${student.id}`, student)
+        const res = await axios.put(`http://localhost:3000/teachers/${teacher.id}`, teacher)
         const data = await res.data
         return data;
     } catch (error) {
@@ -37,9 +37,9 @@ export const editData = createAsyncThunk("student/editData", async (student) => 
     }
 })
 
-export const deleteData = createAsyncThunk("student/deleteData", async (id) => {
+export const deleteData = createAsyncThunk("teacher/deleteData", async (id) => {
     try {
-        const res = await axios.delete(`http://localhost:3000/students/${id}`)
+        const res = await axios.delete(`http://localhost:3000/teachers/${id}`)
         const data = await res.data
         return data;
     } catch (error) {
@@ -47,8 +47,8 @@ export const deleteData = createAsyncThunk("student/deleteData", async (id) => {
     }
 })
 
-const studentSlice = createSlice({
-    name: "student",
+const teacherSlice = createSlice({
+    name: "teacher",
     initialState,
     extraReducers: (builder) => {
         builder.addCase(fetchData.pending, (state) => {
@@ -56,22 +56,22 @@ const studentSlice = createSlice({
         })
         builder.addCase(fetchData.fulfilled, (state, action) => {
             state.loading = false
-            state.studentData = action.payload
+            state.teacherData = action.payload
             state.error = ""
         })
         builder.addCase(fetchData.rejected, (state, action) => {
             state.loading = false
-            state.studentData = []
+            state.teacherData = []
             state.error = action.payload
         })
 
-        // Add student
+        // Add teacher
         builder.addCase(addData.pending, (state) => {
             state.loading = true
         })
         builder.addCase(addData.fulfilled, (state, action) => {
             state.loading = false
-            state.studentData = [...state.studentData, action.payload]
+            state.teacherData = [...state.teacherData, action.payload]
             state.error = ""
         })
         builder.addCase(addData.rejected, (state, action) => {
@@ -79,13 +79,13 @@ const studentSlice = createSlice({
             state.error = action.payload
         })
 
-        // Edit student
+        // Edit teacher
         builder.addCase(editData.pending, (state) => {
             state.loading = true
         })
         builder.addCase(editData.fulfilled, (state, action) => {
             state.loading = false
-            state.studentData = state.studentData.map(data => data.id == action.payload.id ? action.payload : data)
+            state.teacherData = state.teacherData.map(data => data.id == action.payload.id ? action.payload : data)
             state.error = ""
         })
         builder.addCase(editData.rejected, (state, action) => {
@@ -93,13 +93,13 @@ const studentSlice = createSlice({
             state.error = action.payload
         })
 
-        // Delete student
+        // Delete teacher
         builder.addCase(deleteData.pending, (state) => {
             state.loading = true
         })
         builder.addCase(deleteData.fulfilled, (state, action) => {
             state.loading = false
-            state.studentData = state.studentData.filter(data => data.id !== action.payload.id)
+            state.teacherData = state.teacherData.filter(data => data.id !== action.payload.id)
             state.error = ""
         })
         builder.addCase(deleteData.rejected, (state, action) => {
@@ -109,5 +109,5 @@ const studentSlice = createSlice({
     }
 })
 
-export const studentReducer = studentSlice.reducer;
-export const studentAction = studentSlice.actions;
+export const teacherReducer = teacherSlice.reducer;
+export const teacherAction = teacherSlice.actions;

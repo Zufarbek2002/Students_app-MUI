@@ -8,16 +8,25 @@ import TeachersList from "../components/teachersComp/TeachersList";
 import TeacherSearchComp from "../components/teachersComp/TeacherSearchComp";
 import TeacherModalComp from "../components/teachersComp/TeacherModalComp";
 import TeacherEditModalComp from "../components/teachersComp/TeacherEditModalComp";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchData } from "../app/teachers/teacherSlice";
 
 const Teachers = () => {
+  const { loading, teacherData, error } = useSelector((state) => state.teacher);
+  const dispatch = useDispatch();
+
   const [dataAll, setDataAll] = useState([]);
   const [data, setData] = useState([]);
-  const [filtered, setFiltered] = useState(data);
+  const [filtered, setFiltered] = useState(teacherData);
   const [addModal, setAddModal] = useState(false);
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState();
   const [studentData, setStudentData] = useState([]);
   const [editModal, setEditModal] = useState(false);
+
+  useEffect(() => {
+    dispatch(fetchData());
+  }, []);
 
   const fetchApiAll = async () => {
     const res = await axios.get("http://localhost:3000/teachers");
@@ -37,11 +46,11 @@ const Teachers = () => {
     fetchApiAll();
   }, []);
   useEffect(() => {
-    fetchApi();
+    dispatch(fetchData());
   }, [page, addModal, editModal]);
   useEffect(() => {
-    setFiltered(data);
-  }, [data]);
+    setFiltered(teacherData);
+  }, [teacherData]);
 
   const addOpenModal = () => {
     setAddModal(true);
@@ -75,6 +84,32 @@ const Teachers = () => {
   };
   return (
     <div>
+      {loading && (
+        <h1
+          style={{
+            position: "absolute",
+            top: "370px",
+            width: "100%",
+            textAlign: "center",
+          }}
+        >
+          Loading ...
+        </h1>
+      )}
+      {error && (
+        <h1
+          style={{
+            position: "absolute",
+            top: "370px",
+            width: "100%",
+            textAlign: "center",
+            color: "red",
+          }}
+        >
+          {error}
+        </h1>
+      )}
+
       <Box sx={{ display: "flex" }}>
         <Dashboard />
         <Container maxWidth="xl" sx={{ mt: 12 }}>
@@ -87,7 +122,11 @@ const Teachers = () => {
             data={data}
             setFiltered={setFiltered}
           />
-          <TeachersList filtered={filtered} setFiltered={setFiltered} handleEdit={handleEdit}/>
+          <TeachersList
+            filtered={filtered}
+            setFiltered={setFiltered}
+            handleEdit={handleEdit}
+          />
           <TeacherModalComp
             addModal={addModal}
             addStudent={addStudent}
