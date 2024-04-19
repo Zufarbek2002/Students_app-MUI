@@ -47,6 +47,12 @@
       "firstname": "Alex",
       "lastname": "Smith",
       "group": "React N35"
+    },
+    {
+      "id": "ad26",
+      "firstname": "Joe",
+      "lastname": "Black",
+      "group": "React N35"
     }
   ],
   "teachers": [

@@ -17,11 +17,14 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { addData } from "../../app/students/studentSlice";
 
-const ModalComp = ({ addModal, addCloseModal, addStudent }) => {
+const ModalComp = ({ addModal, addCloseModal }) => {
   const form = useForm();
   const { register, handleSubmit, formState, setValue } = form;
   const { errors } = formState;
+  const dispatch = useDispatch();
 
   const onSubmit = (student) => {
     if (
@@ -33,7 +36,7 @@ const ModalComp = ({ addModal, addCloseModal, addStudent }) => {
       setValue("firstname", "");
       setValue("lastname", "");
       addCloseModal();
-      addStudent(student);
+      dispatch(addData(student));
     } else alert("Firstname or Lastname less 2 letters");
   };
 

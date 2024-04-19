@@ -43,9 +43,6 @@ const Students = () => {
   const editCloseModal = () => {
     setEditModal(false);
   };
-  const addStudent = (student) => {
-    axios.post("http://localhost:3000/students", student);
-  };
 
   const handleEdit = async (id) => {
     const res = await axios(`http://localhost:3000/students/${id}`);
@@ -78,7 +75,6 @@ const Students = () => {
           />
           <ModalComp
             addModal={addModal}
-            addStudent={addStudent}
             addCloseModal={addCloseModal}
           />
           <EditModalComp

@@ -17,6 +17,16 @@ export const fetchData = createAsyncThunk("student/fetchData", async () => {
     }
 })
 
+export const addData = createAsyncThunk("student/addData", async (student) => {
+    try {
+        const res = await axios.post("http://localhost:3000/students", student)
+        const data = res.data
+        return data;
+    } catch (error) {
+        return error.message
+    }
+})
+
 const studentSlice = createSlice({
     name: "student",
     initialState,
@@ -32,6 +42,19 @@ const studentSlice = createSlice({
         builder.addCase(fetchData.rejected, (state, action) => {
             state.loading = false
             state.studentData = []
+            state.error = action.payload
+        })
+        // Add student
+        builder.addCase(addData.pending, (state) => {
+            state.loading = true
+        })
+        builder.addCase(addData.fulfilled, (state, action) => {
+            state.loading = false
+            state.studentData = [...state.studentData, action.payload]
+            state.error = ""
+        })
+        builder.addCase(addData.rejected, (state, action) => {
+            state.loading = false
             state.error = action.payload
         })
     }
