@@ -9,38 +9,38 @@ import ModalComp from "../components/studentsComp/ModalComp";
 import StudentsList from "../components/studentsComp/StudentsList";
 import EditModalComp from "../components/studentsComp/EditModalComp";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUsers } from "../redux/users/userActions";
+import { fetchData } from "../app/students/studentSlice";
 
 const Students = () => {
   const [data, setData] = useState([]);
   const [filtered, setFiltered] = useState(data);
   const [addModal, setAddModal] = useState(false);
-  const [studentData, setStudentData] = useState([]);
+  const [studentDatas, setStudentData] = useState([]);
   const [editModal, setEditModal] = useState(false);
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState();
-
-  const { loading, error } = useSelector((state) => state.user);
+  const { loading, studentData, error } = useSelector((state) => state.student);
+  // const { user } = useSelector((state) => state.student);
   const dispatch = useDispatch();
-
   const fetchApi = async () => {
-    const res = await axios.get(
-      `http://localhost:3000/students?_page=${page}&_per_page=5`
-    );
-    const data = await res.data;
-    setData(data.data);
-    setPages(data.pages);
+    // const res = await axios.get(
+    //   `http://localhost:3000/students?_page=${page}&_per_page=5`
+    // );
+    // const data = await res.data;
+    setData(studentData.data);
+    setPages(studentData.pages);
   };
   useEffect(() => {
     fetchApi();
-    dispatch(fetchUsers());
+    dispatch(fetchData());
+    // dispatch(fetchStudents(page))
   }, []);
   useEffect(() => {
     fetchApi();
   }, [page, addModal, editModal]);
   useEffect(() => {
-    setFiltered(data);
-  }, [data]);
+    setFiltered(studentData);
+  }, [studentData]);
 
   const addOpenModal = () => {
     setAddModal(true);
@@ -96,7 +96,7 @@ const Students = () => {
           <EditModalComp
             editModal={editModal}
             editCloseModal={editCloseModal}
-            studentData={studentData}
+            studentData={studentDatas}
           />
           <Box
             width={"100%"}

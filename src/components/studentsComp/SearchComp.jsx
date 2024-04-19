@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import { Add } from "@mui/icons-material";
 import {
@@ -9,23 +10,22 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import { fetchUsers } from "../../redux/users/userActions";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
+import { fetchData } from "../../app/students/studentSlice";
 
 
 const SearchComp = ({ addOpenModal, data, setFiltered }) => {
-  const { user } = useSelector((state) => state.user);
+  const { studentData } = useSelector((state) => state.student);
   const dispatch = useDispatch();
-
   useEffect(() => {
-    dispatch(fetchUsers());
+    dispatch(fetchData());
   }, []);
   const handleSearch = (e) => {
     const text = e.target.value.toLowerCase().trim();
     if (text) {
       setFiltered(
-        user.filter(
+        studentData.filter(
           (e) =>
             e.firstname.toLowerCase().includes(text) ||
             e.lastname.toLowerCase().includes(text)
@@ -39,7 +39,7 @@ const SearchComp = ({ addOpenModal, data, setFiltered }) => {
     if (group == "All") {
       filteredValue = data;
     } else {
-      filteredValue = user.filter((data) => data.group == group);
+      filteredValue = studentData.filter((data) => data.group == group);
     }
     setFiltered(filteredValue);
   };

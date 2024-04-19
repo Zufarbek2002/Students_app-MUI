@@ -8,7 +8,7 @@ import Profile from "./page/Profile";
 import { AuthProvider } from "./components/Auth";
 import RequireAuth from "./components/RequireAuth";
 import { Provider } from "react-redux";
-import store from "./redux/store";
+import store from "./app/store";
 const App = () => {
   return (
     <Provider store={store}>

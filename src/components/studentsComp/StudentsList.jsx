@@ -19,7 +19,6 @@ const StudentsList = ({ setFiltered, filtered, handleEdit }) => {
       await axios.delete(`http://localhost:3000/students/${id}`);
     }
   };
-
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
