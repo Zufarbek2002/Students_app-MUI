@@ -16,9 +16,11 @@ import {
   Typography,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import axios from "axios";
+import { useDispatch } from "react-redux";
+import { editData } from "../../app/students/studentSlice";
 
 const EditModalComp = ({ editModal, editCloseModal, studentData }) => {
+  const dispatch = useDispatch()
   const [student, setStudent] = useState({
     id: null,
     firstname: "",
@@ -39,13 +41,13 @@ const EditModalComp = ({ editModal, editCloseModal, studentData }) => {
       [e.target.id]: e.target.value,
     });
   };
-  const editStudent = async (id) => {
+  const editStudent = () => {
     if (
       student.firstname.length >= 2 &&
       student.lastname.length >= 2 &&
       student.group !== ""
     ) {
-      await axios.put(`http://localhost:3000/students/${id}`, student);
+      dispatch(editData(student))
       editCloseModal();
     } else alert("Firstname or Lastname less 2 letters");
   };

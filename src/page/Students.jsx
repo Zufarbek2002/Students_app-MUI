@@ -25,7 +25,7 @@ const Students = () => {
     dispatch(fetchData());
   }, []);
   useEffect(() => {
-    dispatch(fetchData())
+    dispatch(fetchData());
   }, [page, addModal, editModal]);
   useEffect(() => {
     setFiltered(studentData);
@@ -55,8 +55,31 @@ const Students = () => {
 
   return (
     <>
-      {loading && <h1 style={{position: 'absolute', top: '370px', width:'100%', textAlign: 'center'}}>Loading ...</h1>}
-      {error && <h1 style={{position: 'absolute', top: '370px', width:'100%', textAlign: 'center', color: 'red'}}>{error}</h1>}
+      {loading && (
+        <h1
+          style={{
+            position: "absolute",
+            top: "370px",
+            width: "100%",
+            textAlign: "center",
+          }}
+        >
+          Loading ...
+        </h1>
+      )}
+      {error && (
+        <h1
+          style={{
+            position: "absolute",
+            top: "370px",
+            width: "100%",
+            textAlign: "center",
+            color: "red",
+          }}
+        >
+          {error}
+        </h1>
+      )}
 
       <Box sx={{ display: "flex" }}>
         <Dashboard />
@@ -64,19 +87,13 @@ const Students = () => {
           <Typography variant="h5" sx={{ mb: 4 }}>
             Students
           </Typography>
-          <SearchComp
-            addOpenModal={addOpenModal}
-            setFiltered={setFiltered}
-          />
+          <SearchComp addOpenModal={addOpenModal} setFiltered={setFiltered} />
           <StudentsList
             filtered={filtered}
             setFiltered={setFiltered}
             handleEdit={handleEdit}
           />
-          <ModalComp
-            addModal={addModal}
-            addCloseModal={addCloseModal}
-          />
+          <ModalComp addModal={addModal} addCloseModal={addCloseModal} />
           <EditModalComp
             editModal={editModal}
             editCloseModal={editCloseModal}
@@ -87,11 +104,7 @@ const Students = () => {
             sx={{ display: "flex", justifyContent: "center" }}
           >
             <Stack spacing={2} mt={3} mb={10}>
-              <Pagination
-                page={page}
-                color="primary"
-                onChange={handlePage}
-              />
+              <Pagination page={page} color="primary" onChange={handlePage} />
             </Stack>
           </Box>
         </Container>
