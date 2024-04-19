@@ -37,6 +37,16 @@ export const editData = createAsyncThunk("student/editData", async (student) => 
     }
 })
 
+export const deleteData = createAsyncThunk("student/deleteData", async (id) => {
+    try {
+        const res = await axios.delete(`http://localhost:3000/students/${id}`)
+        const data = res.data
+        return data;
+    } catch (error) {
+        return error.message
+    }
+})
+
 const studentSlice = createSlice({
     name: "student",
     initialState,
@@ -54,7 +64,7 @@ const studentSlice = createSlice({
             state.studentData = []
             state.error = action.payload
         })
-        
+
         // Add student
         builder.addCase(addData.pending, (state) => {
             state.loading = true
@@ -79,6 +89,20 @@ const studentSlice = createSlice({
             state.error = ""
         })
         builder.addCase(editData.rejected, (state, action) => {
+            state.loading = false
+            state.error = action.payload
+        })
+
+        // Delete student
+        builder.addCase(deleteData.pending, (state) => {
+            state.loading = true
+        })
+        builder.addCase(deleteData.fulfilled, (state, action) => {
+            state.loading = false
+            state.studentData = state.studentData.filter(data => data.id !== action.payload.id)
+            state.error = ""
+        })
+        builder.addCase(deleteData.rejected, (state, action) => {
             state.loading = false
             state.error = action.payload
         })

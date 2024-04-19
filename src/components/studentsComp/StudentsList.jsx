@@ -9,14 +9,16 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import axios from "axios";
 import { Delete, Edit } from "@mui/icons-material";
+import { useDispatch } from "react-redux";
+import { deleteData } from "../../app/students/studentSlice";
 
-const StudentsList = ({ setFiltered, filtered, handleEdit }) => {
+const StudentsList = ({ filtered, handleEdit }) => {
+  const dispatch = useDispatch();
+
   const handleDelete = async (id) => {
     if (confirm("Are you sure delete")) {
-      setFiltered(filtered.filter((student) => student.id !== id));
-      await axios.delete(`http://localhost:3000/students/${id}`);
+      dispatch(deleteData(id));
     }
   };
   return (
